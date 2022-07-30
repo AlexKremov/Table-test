@@ -3,14 +3,14 @@ import React from "react";
 import TableRow from "./components/TableRow";
 import Filters from "./components/Filters";
 import { getItems } from "./api/queries";
+import { useItems } from "./hooks/useItems"
+import items from './init/items.json'
 
 function App() {
-  const [items, setItems] = React.useState([]);
-  React.useEffect(() => {
-    getItems().then((res) => {
-      setItems(res.data);
-    });
-  }, []);
+  const { data } = useItems();
+
+  const bd = data.map((el) => Object.values(el))
+  console.log(bd)
 
   return (
     <div className="container">
@@ -57,7 +57,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => {
+          {data.map((item) => {
             return (
               <TableRow
                 key={item.id}
