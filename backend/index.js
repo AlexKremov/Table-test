@@ -1,31 +1,40 @@
-import express from 'express';
-import postgresql from './postgresql.js';
+import express from "express";
+import postgresql from "./postgresql.js";
+import fs from "fs";
+
+let items;
+fs.readFile("./items.json", "utf8", (error, data) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
+  items = JSON.parse(data);
+});
 
 postgresql(async (connection) => {
-  await connection.query('CREATE TABLE IF NOT EXISTS items (id bigserial primary key, title text, author text);');
-  await connection.query('CREATE UNIQUE INDEX IF NOT EXISTS title ON items (title);');
-
-  const items = [
-    { title: 'Mastering the Lightning Network', author: 'Andreas Antonopoulos' },
-    { title: 'Load Balancing with HAProxy', author: 'Nick Ramirez' },
-    { title: 'Silent Weapons for Quiet Wars', author: 'Unknown' },
-  ];
+  await connection.query('DROP TABLE IF EXISTS items;');
+  await connection.query(
+    "CREATE TABLE IF NOT EXISTS items (id bigserial primary key, name character varying, qty numeric(10,2) NOT NULL default 0, distance numeric(10,2) NOT NULL default 0, date timestamp without time zone NOT NULL);"
+  );
+  
 
   for (let i = 0; i < items.length; i += 1) {
-    const book = items[i];
-    await connection.query(`INSERT INTO items (title, author) VALUES ('${book.title}', '${book.author}') ON CONFLICT DO NOTHING;`);
+    const item = items[i];
+    await connection.query(
+      `INSERT INTO items (name, qty, distance, date) VALUES ('${item.name}', '${item.qty}', '${item.distance}', '${item.date}') ON CONFLICT DO NOTHING;`
+    );
   }
 
-  console.log('PostgreSQL database seeded!');
+  console.log("PostgreSQL database seeded!");
 });
 
 const app = express();
 
-app.get('/items', async (req, res) => {
-  const rows = await process.postgresql.query('SELECT * FROM items');
+app.get("/items", async (req, res) => {
+  const rows = await process.postgresql.query("SELECT * FROM items");
   res.status(200).send(JSON.stringify(rows));
 });
 
 app.listen(3000, () => {
-  console.log('App running at http://localhost:3000');
+  console.log("App running at http://localhost:3000");
 });
