@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import data from './items.json'
 
 export const itemsSlice = createSlice({
   name: "items",
   initialState: {
-    data: data,
+    data: [],
   },
   reducers: {},
 });

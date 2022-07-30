@@ -1,6 +1,7 @@
 import express from "express";
 import postgresql from "./postgresql.js";
 import fs from "fs";
+import cors from 'cors'
 
 let items;
 fs.readFile("./items.json", "utf8", (error, data) => {
@@ -29,12 +30,13 @@ postgresql(async (connection) => {
 });
 
 const app = express();
+app.use(cors())
 
 app.get("/items", async (req, res) => {
   const rows = await process.postgresql.query("SELECT * FROM items");
   res.status(200).send(JSON.stringify(rows));
 });
 
-app.listen(3000, () => {
-  console.log("App running at http://localhost:3000");
+app.listen(3001, () => {
+  
 });

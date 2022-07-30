@@ -2,16 +2,10 @@ import "./index.css";
 import React from "react";
 import TableRow from "./components/TableRow";
 import Filters from "./components/Filters";
-import { getItems } from "./api/queries";
-import { useItems } from "./hooks/useItems"
-import items from './init/items.json'
+import { useItems } from './hooks/useItems'
 
 function App() {
-  const { data } = useItems();
-
-  const bd = data.map((el) => Object.values(el))
-  console.log(bd)
-
+const { data } = useItems();
   return (
     <div className="container">
       <Filters />
@@ -57,7 +51,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => {
+          {/* {data.map((item) => {
             return (
               <TableRow
                 key={item.id}
@@ -67,7 +61,7 @@ function App() {
                 distance={item.distance}
               />
             );
-          })}
+          })} */}
         </tbody>
       </table>
     </div>
