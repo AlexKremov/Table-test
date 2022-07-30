@@ -5,9 +5,13 @@ export const itemsSlice = createSlice({
   initialState: {
     data: [],
   },
-  reducers: {},
+  reducers: {
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
+  },
 });
 
-export const {} = itemsSlice.actions;
+export const { setData } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

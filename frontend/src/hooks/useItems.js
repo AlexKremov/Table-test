@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../api/queries";
+import { setData } from "../init/itemsSlice";
 
 export function useItems() {
   const { data } = useSelector((state) => state.items);
@@ -8,7 +9,8 @@ export function useItems() {
 
   React.useEffect(() => {
     getItems().then((res) => {
-      console.log(res);
+      console.log(res.data)
+      dispatch(setData(res.data))
     });
   }, [dispatch]);
 

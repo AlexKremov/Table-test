@@ -51,17 +51,17 @@ const { data } = useItems();
           </tr>
         </thead>
         <tbody>
-          {/* {data.map((item) => {
+          {data.map((item) => {
             return (
               <TableRow
                 key={item.id}
                 name={item.name}
-                data={item.data}
+                data={item.date}
                 qty={item.qty}
                 distance={item.distance}
               />
             );
-          })} */}
+          })}
         </tbody>
       </table>
     </div>
