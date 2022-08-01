@@ -37,6 +37,6 @@ app.get("/items", async (req, res) => {
   res.status(200).send(JSON.stringify(rows));
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT, () => {
   
 });
