@@ -16,8 +16,20 @@ function App() {
   const currentItem = data.slice(firstItemIndex, lastItemIndex);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
-  const prevPage = () => setCurrentPage((prev) => prev - 1);
+  const nextPage = () => {
+    if (currentPage > Math.ceil(totalItems / itemsPerPage)) {
+      setCurrentPage(Math.ceil(totalItems / itemsPerPage));
+    } if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
+    setCurrentPage((prev) => prev + 1);
+    }
+  };
+  const prevPage = () => {
+    if (currentPage < 1) {
+      setCurrentPage(1);
+    } if (currentPage > 1) {
+    setCurrentPage((prev) => prev - 1);
+    }
+  };
 
   return (
     <div className="container">
@@ -93,10 +105,10 @@ function App() {
         paginate={paginate}
       />
 
-      <button className="btn btn-primary" onClick={nextPage}>
+      <button className="btn btn-primary" onClick={prevPage}>
         Prev Page
       </button>
-      <button className="btn btn-primary ms-3" onClick={prevPage}>
+      <button className="btn btn-primary ms-3" onClick={nextPage}>
         Next Page
       </button>
       <select
