@@ -17,9 +17,9 @@ function App() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const nextPage = () => {
-    if (currentPage > Math.ceil(totalItems / itemsPerPage)) {
-      setCurrentPage(Math.ceil(totalItems / itemsPerPage));
-    } if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
+    if (currentPage > Math.ceil(data.length / itemsPerPage)) {
+      setCurrentPage(Math.ceil(data.length / itemsPerPage));
+    } if (currentPage < Math.ceil(data.length / itemsPerPage)) {
     setCurrentPage((prev) => prev + 1);
     }
   };
